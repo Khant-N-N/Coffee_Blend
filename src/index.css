@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --text-secondary: #5e5e5e;
+  --secondary-color: #c49b63;
+  --primary-color: #151111;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-color);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: url('./assets/bg_4.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+  font-size: 18px;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.font-curve {
+  font-family: 'Dancing Script', cursive;
+
+}
+
+.rotate-ani {
+  background-color: #151111;
+}
