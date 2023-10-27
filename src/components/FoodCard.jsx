@@ -31,7 +31,7 @@ const FoodCard = ({ food }) => {
       >
         Add to Cart{" "}
         {count[food.id] !== 0 && (
-          <span className="absolute right-[-.7rem] top-[-.7rem] bg-[var(--secondary-color)] px-2 rounded-full">
+          <span className="absolute right-[-.7rem] top-[-.7rem] text-black bg-[#f8b500] px-2 rounded-full">
             {count[food.id]}
           </span>
         )}

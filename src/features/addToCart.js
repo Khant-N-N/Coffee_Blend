@@ -17,9 +17,15 @@ export const cartSlice = createSlice({
     reducers: {
         increment: (state, action) => {
             return { ...state, [action.payload]: state[action.payload] + 1 }
+        },
+        decrement: (state, action) => {
+            return { ...state, [action.payload]: state[action.payload] - 1 }
+        },
+        manualAmount: (state, action) => {
+            return { ...state, [action.payload.id]: Number(action.payload.amount) }
         }
     }
 })
 
-export const { increment } = cartSlice.actions
+export const { increment, decrement, manualAmount } = cartSlice.actions
 export default cartSlice.reducer

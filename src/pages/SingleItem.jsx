@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { foodMenu } from "../constants/constants";
 import PagesHero from "../components/PagesHero";
 import FoodCard from "../components/FoodCard";
+import { useDispatch, useSelector } from "react-redux";
+import { manualAmount } from "../features/addToCart";
 
 const SingleItem = () => {
+  const count = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const inputRef = useRef();
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
+
   useEffect(() => {
     setProduct(foodMenu.find((food) => food.id === Number(id)));
     setRelatedProducts(
@@ -15,6 +21,7 @@ const SingleItem = () => {
         (food) => food.category === product?.category && food.id !== Number(id)
       )
     );
+    inputRef.current.value = 1;
   }, [id, product]);
 
   return (
@@ -22,11 +29,11 @@ const SingleItem = () => {
       <PagesHero title="Product Detail" path="product detail" />
       <Link
         to="/Shop"
-        className="px-3 md:px-14 text-[var(--secondary-color)] underline"
+        className="px-3 md:mx-14 text-[var(--secondary-color)] my-10 flex max-w-xs items-center underline"
       >
         {"<"} Back to Shop
       </Link>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-4/5 mx-auto my-24">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-4/5 mx-auto mt-2 mb-24">
         <div>
           <img
             src={product?.img}
@@ -54,28 +61,44 @@ const SingleItem = () => {
           </p>
           <div className="flex gap-3 w-full justify-center md:justify-start">
             <button
+              onClick={() => {
+                if (inputRef.current.value < 1) return;
+                inputRef.current.value -= 1;
+              }}
               type="button"
-              className="border border-[var(--text-secondary)] bg-transparent text-center py-2 px-4 text-[var(--secondary-color)] font-bold text-[1.2rem]"
+              className="border border-[var(--text-secondary)] bg-transparent text-center py-2 px-4 text-[var(--secondary-color)] active:scale-[0.9] font-bold text-[1.2rem]"
             >
               -
             </button>
             <input
+              ref={inputRef}
               type="number"
               name="number"
               className="border border-[var(--text-secondary)] bg-transparent text-center py-2 px-4 text-[var(--secondary-color)] outline-none w-20 text-[1.2rem]"
             />
             <button
+              onClick={() =>
+                (inputRef.current.value = Number(inputRef.current.value) + 1)
+              }
               type="button"
-              className="border border-[var(--text-secondary)] bg-transparent text-center py-2 px-4 text-[var(--secondary-color)] font-bold text-[1.2rem]"
+              className="border border-[var(--text-secondary)] bg-transparent text-center py-2 px-4 text-[var(--secondary-color)] active:scale-[0.9] font-bold text-[1.2rem]"
             >
               +
             </button>
           </div>
           <button
+            onClick={() =>
+              dispatch(manualAmount({ id: id, amount: inputRef.current.value }))
+            }
             type="button"
-            className="py-3 px-5 md:w-[14rem] border border-[var(--secondary-color)] text-black bg-[var(--secondary-color)] hover:bg-transparent hover:text-[var(--secondary-color)]"
+            className="relative py-3 px-5 md:w-[14rem] border border-[var(--secondary-color)] text-black bg-[var(--secondary-color)] hover:bg-transparent hover:text-[var(--secondary-color)]"
           >
-            Add to Cart
+            {count[id] === 0 ? "Add to Cart" : "Update Cart"}
+            {count[id] !== 0 && (
+              <span className="absolute top-[-9px] right-[-10px] text-black bg-[#f8b500] py-0 px-2 rounded-full">
+                {count[id]}
+              </span>
+            )}
           </button>
         </div>
       </div>
