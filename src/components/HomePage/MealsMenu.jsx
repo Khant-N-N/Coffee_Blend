@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import { foodMenu } from "../../constants/constants";
 import { useEffect, useState } from "react";
 import FoodCard from "../FoodCard";
 
 const MealsMenu = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selected, setSelected] = useState("Main Dish");
+  const [selected, setSelected] = useState("Starter");
   const [category, setCategory] = useState([]);
   useEffect(() => {
     setCategory([...new Set(foodMenu.map((food) => food.category))]);

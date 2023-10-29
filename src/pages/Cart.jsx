@@ -91,7 +91,7 @@ const Cart = () => {
       </div>
       <div className="flex justify-center md:justify-end w-4/5 mx-auto">
         {cartItems.length === 0 ? (
-          <div className="text-center my-24">
+          <div className="text-center w-full my-24">
             Cart Is Empty{" "}
             <Link
               onClick={() => window.scrollTo(0, 0)}
